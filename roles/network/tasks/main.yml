@@ -1,0 +1,12 @@
+---
+- name: Enable ::80 to access as external
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+    
+- name: restart_nginx
+  service:
+    name: nginx
+    state: restarted
+...

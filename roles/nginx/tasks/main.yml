@@ -1,0 +1,21 @@
+---
+- name: Verify if nginx is installed
+  shell: command -v nginx
+  register: nginx_installed
+  ignore_errors: true
+
+- name: install nginx if is not installed
+  apt: name=nginx update_cache=yes state=latest
+  when: nginx_installed is failed
+
+- name: Apply nginx template
+  template: 
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+
+- name: Enable website
+  file:
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+...

@@ -1,0 +1,4 @@
+---
+- name: clone ptoject from github to webste location
+  git: dest={{ app_path }} clone=yes repo={{ repo }}
+...
