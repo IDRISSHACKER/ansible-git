@@ -4,9 +4,28 @@
     rule: allow
     port: 80
     proto: tcp
+
+- name: Enable ::25 to access as external
+  ufw:
+    rule: allow
+    port: 25
+    proto: tcp
+
+- name: Enable ::587 to access as external
+  ufw:
+    rule: allow
+    port: 587
+    proto: tcp
+
+- name: Enable ::587 to access as external
+  ufw:
+    rule: allow
+    port: 465
+    proto: tcp
     
 - name: restart_nginx
   service:
     name: nginx
     state: restarted
+
 ...

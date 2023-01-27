@@ -1,0 +1,41 @@
+---
+- hosts: web
+  become: yes
+
+  vars:
+    proxy: localhost:8089
+    port: 80
+    domaine: space.guihon.cm
+  
+  tasks:
+    - name: Check if nginx not installed
+      shell: command -v nginx
+      register: nginx_installed
+      ignore_errors: true
+    
+    - name: install nginx
+      apt: name=nginx state=latest
+      when: nginx_installed is failed
+    
+    - name: cop website config
+      template:
+        src: templates/clouad/nginx.conf.j2
+        dest: /etc/nginx/sites-available/work.guihon.cm
+      --name: 
+
+    - name: Enable website
+      file:
+        src: /etc/nginx/sites-available/word.guihon.cm
+        dest: /etc/nginx/sites-enabled/clouad.guihon.cm
+        state: link
+      notify: Restart nginx
+  
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+
+
+
+...

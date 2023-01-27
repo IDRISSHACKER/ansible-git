@@ -6,6 +6,7 @@
     repo: https://github.com/IDRISSHACKER/guihonapp.git
     app_path: /var/www/ansible_web 
     server_name: "{{ ansible_default_ipv4.address  }}"
+    admin_email: idrisscoder@gmail.com
   
   roles:
     - nginx

@@ -1,0 +1,22 @@
+upstream clouad_guihon_cm {
+    server {{ proxy }};
+}
+
+server {
+
+    server_name {{ domaine }};
+    listen {{ port }};
+    listen [::]:{{ port }}; 
+
+    location / {
+        proxy_pass http://clouad_guihon_cm;
+    }
+
+    location /websocket/ {
+        proxy_pass http://clouad_guihon_cm;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+}
